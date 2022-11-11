@@ -77,5 +77,6 @@ module.exports = {
       },
     ],
     'global-require': 'off',
+    '@next/next/no-img-element': 'off',
   },
 };
