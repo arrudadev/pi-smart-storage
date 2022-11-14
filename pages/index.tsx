@@ -30,7 +30,7 @@ export default function Home() {
       </nav>
 
       <section className="header relative pt-16 items-center flex h-screen">
-        <div className="container mx-auto items-center flex flex-wrap">
+        <div className="container mx-auto items-center flex flex-wrap mt-0 sm:mt-20 md:mt-10">
           <div className="w-full md:w-full lg:w-6/12 xl:w-6/12 px-4">
             <h2 className="font-semibold text-4xl text-blueGray-600">
               Gestão de Estoque Inteligente
@@ -58,7 +58,7 @@ export default function Home() {
         </div>
 
         <img
-          className="absolute top-0 b-auto right-0 pt-16 -mt-48 sm:mt-0 h-full lg:block hidden"
+          className="absolute top-0 b-auto right-0 pt-16 mt-0 hidden sm:block sm:h-2/4 lg:h-full"
           src="/images/home-hero.png"
           alt="Hero"
         />
