@@ -64,7 +64,7 @@ export default function Home() {
         />
       </section>
 
-      <footer className="relative w-full pt-12 pb-6">
+      <footer className="container mx-auto relative w-full pt-12 pb-6">
         <hr className="my-6 border-blueGray-300" />
 
         <div className="px-4">
