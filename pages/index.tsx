@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { HomeFooter } from '../components/Footers/HomeFooter';
 import { HomeNavBar } from '../components/Navbars/HomeNavbar';
 
 export default function Home() {
@@ -7,7 +8,7 @@ export default function Home() {
     <>
       <HomeNavBar />
 
-      <section className="header relative pt-16 items-center flex h-screen">
+      <main className="header relative pt-16 items-center flex h-screen">
         <div className="container mx-auto items-center flex flex-wrap mt-0 sm:mt-20 md:mt-10">
           <div className="w-full md:w-full lg:w-6/12 xl:w-6/12 px-4">
             <h2 className="font-semibold text-4xl text-blueGray-600">
@@ -24,10 +25,8 @@ export default function Home() {
 
             <div className="mt-12">
               <Link
-                href="/"
+                href="/login"
                 className="github-star ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg"
-                target="_blank"
-                rel="noreferrer"
               >
                 Entrar
               </Link>
@@ -40,21 +39,9 @@ export default function Home() {
           src="/images/home-hero.png"
           alt="Hero"
         />
-      </section>
+      </main>
 
-      <footer className="container mx-auto relative w-full pt-12 pb-6">
-        <hr className="my-6 border-blueGray-300" />
-
-        <div className="px-4">
-          <div className="flex flex-wrap items-center md:justify-between justify-center">
-            <div className="w-full md:w-4/12 px-4 mx-auto text-center">
-              <div className="text-sm text-blueGray-500 font-semibold py-1">
-                Copyright © {new Date().getFullYear()} Smart Storage.
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <HomeFooter />
     </>
   );
 }
