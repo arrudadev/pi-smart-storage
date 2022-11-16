@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { ButtonPrimary } from '../components/Buttons/ButtonPrimary';
 import { HomeFooter } from '../components/Footers/HomeFooter';
 import { HomeNavBar } from '../components/Navbars/HomeNavbar';
 
@@ -24,11 +25,10 @@ export default function Home() {
             </p>
 
             <div className="mt-12">
-              <Link
-                href="/login"
-                className="github-star ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg"
-              >
-                Entrar
+              <Link href="/login">
+                <ButtonPrimary additionalClass="text-sm px-6 py-4">
+                  Entrar
+                </ButtonPrimary>
               </Link>
             </div>
           </div>

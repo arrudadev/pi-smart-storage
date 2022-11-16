@@ -79,5 +79,7 @@ module.exports = {
     'global-require': 'off',
     '@next/next/no-img-element': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
+    'react/button-has-type': 'off',
+    'react/require-default-props': 'off',
   },
 };
