@@ -81,5 +81,6 @@ module.exports = {
     'jsx-a11y/label-has-associated-control': 'off',
     'react/button-has-type': 'off',
     'react/require-default-props': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
   },
 };
