@@ -1,3 +1,4 @@
+import { LineChart } from '../../components/Charts/LineChart';
 import { Sidebar } from '../../components/Navbars/Sidebar';
 
 export default function Dashboard() {
@@ -440,6 +441,8 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+
+          <LineChart />
 
           <footer className="block py-4">
             <div className="container mx-auto px-4">
