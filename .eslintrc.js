@@ -82,5 +82,6 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/require-default-props': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
+    'react/jsx-no-bind': 'off',
   },
 };

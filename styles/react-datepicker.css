@@ -1,0 +1,17 @@
+.react-datepicker__month-wrapper {
+  display: flex;
+}
+
+.react-datepicker__month-text {
+  padding: 5px;
+  width: 4.5rem !important;
+}
+
+.react-datepicker__navigation-icon {
+  top: 5px;
+}
+
+.react-datepicker__input-container > input {
+  width: 85px;
+  border-radius: 8px;
+}
