@@ -2209,6 +2209,10 @@ select {
   max-height: 860px;
 }
 
+.max-h-500-px {
+  max-height: 500px;
+}
+
 .max-w-sm {
   max-width: 24rem;
 }

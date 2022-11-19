@@ -7,40 +7,52 @@ import { useModal } from '../../hooks/useModal';
 export const ProductTable = () => {
   const [_, setIsModalOpen] = useModal();
 
-  function generateBarcode() {
+  function generateRandomNumber() {
     return Math.floor(100000000 + Math.random() * 900000000);
   }
 
   const products = [
     {
-      id: '1212332',
+      id: generateRandomNumber(),
       name: 'Product',
       stock: '20',
-      barcode: generateBarcode(),
+      barcode: generateRandomNumber(),
     },
     {
-      id: '8097989',
+      id: generateRandomNumber(),
       name: 'Product 2',
       stock: '18',
-      barcode: generateBarcode(),
+      barcode: generateRandomNumber(),
     },
     {
-      id: '676876687',
+      id: generateRandomNumber(),
       name: 'Product 3',
       stock: '67',
-      barcode: generateBarcode(),
+      barcode: generateRandomNumber(),
     },
     {
-      id: '9784578',
+      id: generateRandomNumber(),
       name: 'Product 4',
       stock: '90',
-      barcode: generateBarcode(),
+      barcode: generateRandomNumber(),
     },
     {
-      id: '9809789',
+      id: generateRandomNumber(),
       name: 'Product 5',
       stock: '37',
-      barcode: generateBarcode(),
+      barcode: generateRandomNumber(),
+    },
+    {
+      id: generateRandomNumber(),
+      name: 'Product 4',
+      stock: '90',
+      barcode: generateRandomNumber(),
+    },
+    {
+      id: generateRandomNumber(),
+      name: 'Product 5',
+      stock: '37',
+      barcode: generateRandomNumber(),
     },
   ];
 
@@ -69,7 +81,7 @@ export const ProductTable = () => {
           </div>
         </div>
 
-        <div className="block w-full overflow-x-auto">
+        <div className="block w-full overflow-auto max-h-500-px">
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
