@@ -89,5 +89,6 @@ module.exports = {
     'no-unused-vars': 'off',
     'react/jsx-no-constructed-context-values': 'off',
     'no-plusplus': 'off',
+    'no-return-await': 'off',
   },
 };
