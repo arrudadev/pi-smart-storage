@@ -1,3 +1,5 @@
+import { CalendarDaysIcon } from '@heroicons/react/20/solid';
+
 import { Datepicker } from '../Inputs/Datepicker';
 
 export const DashboardHeader = () => (
@@ -9,7 +11,12 @@ export const DashboardHeader = () => (
         </h1>
 
         <div className="md:flex flex-row flex-wrap items-center lg:ml-auto mr-3">
-          <div className="relative flex w-full flex-wrap items-stretch">
+          <div className="flex items-center w-full">
+            <CalendarDaysIcon
+              className="h-10 w-10 mr-5 text-white"
+              aria-hidden="true"
+            />
+
             <Datepicker />
           </div>
         </div>
