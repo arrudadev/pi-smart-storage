@@ -1,5 +1,5 @@
 import { LineChart } from '../../components/Charts/LineChart';
-import { Datepicker } from '../../components/Inputs/Datepicker';
+import { DashboardHeader } from '../../components/Headers/DashboardHeader';
 import { Sidebar } from '../../components/Navbars/Sidebar';
 
 export default function Dashboard() {
@@ -10,28 +10,7 @@ export default function Dashboard() {
       <Sidebar />
 
       <main className="relative md:ml-64 bg-blueGray-100">
-        <nav className="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-4">
-          <div className="w-full mx-auto items-center flex justify-between md:flex-nowrap flex-wrap md:px-10 px-4">
-            {/* Brand */}
-            <a
-              className="text-white text-sm uppercase lg:inline-block font-semibold"
-              href="#pablo"
-              onClick={e => e.preventDefault()}
-            >
-              Dashboard
-            </a>
-            {/* Form */}
-            <form className="md:flex flex-row flex-wrap items-center lg:ml-auto mr-3">
-              <div className="relative flex w-full flex-wrap items-stretch">
-                <Datepicker />
-              </div>
-            </form>
-          </div>
-        </nav>
-
-        <header className="bg-blueGray-800 md:pt-32 pb-32 pt-12">
-          <div className="px-4 md:px-10 mx-auto w-full" />
-        </header>
+        <DashboardHeader />
 
         <section className="px-4 md:px-10 mx-auto w-full -m-24 md:-mt-32">
           <div className="flex flex-wrap">
