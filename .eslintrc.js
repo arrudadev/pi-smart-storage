@@ -83,5 +83,8 @@ module.exports = {
     'react/require-default-props': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
     'react/jsx-no-bind': 'off',
+    'react/no-unstable-nested-components': 'off',
+    'react/display-name': 'off',
+    'react/void-dom-elements-no-children': 'off',
   },
 };
