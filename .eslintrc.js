@@ -86,5 +86,7 @@ module.exports = {
     'react/no-unstable-nested-components': 'off',
     'react/display-name': 'off',
     'react/void-dom-elements-no-children': 'off',
+    'no-unused-vars': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
   },
 };

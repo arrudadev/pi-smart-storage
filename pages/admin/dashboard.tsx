@@ -1,6 +1,7 @@
 import { LineChart } from '../../components/Charts/LineChart';
 import { DashboardFooter } from '../../components/Footers/DashboardFooter';
 import { DashboardHeader } from '../../components/Headers/DashboardHeader';
+import { ProductModal } from '../../components/Modals/ProductModal';
 import { Sidebar } from '../../components/Navbars/Sidebar';
 import { ProductTable } from '../../components/Tables/ProductTable';
 
@@ -22,6 +23,8 @@ export default function Dashboard() {
           <DashboardFooter />
         </section>
       </main>
+
+      <ProductModal />
     </>
   );
 }
