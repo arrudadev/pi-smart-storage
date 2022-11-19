@@ -2,6 +2,13 @@ import { useState } from 'react';
 
 import Link from 'next/link';
 
+import {
+  Bars4Icon,
+  XMarkIcon,
+  ChartBarSquareIcon,
+  ArrowRightOnRectangleIcon,
+} from '@heroicons/react/20/solid';
+
 export const Sidebar = () => {
   const [collapseShow, setCollapseShow] = useState('hidden');
 
@@ -13,7 +20,7 @@ export const Sidebar = () => {
           type="button"
           onClick={() => setCollapseShow('bg-white m-2 py-3 px-6')}
         >
-          =
+          <Bars4Icon className="h-5 w-5" aria-hidden="true" />
         </button>
 
         <h1 className="md:block text-left text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0">
@@ -41,7 +48,7 @@ export const Sidebar = () => {
                   className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
                   onClick={() => setCollapseShow('hidden')}
                 >
-                  X
+                  <XMarkIcon className="h-5 w-5" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -57,18 +64,28 @@ export const Sidebar = () => {
             <li className="items-center ml-2">
               <Link
                 href="/admin/dashboard"
-                className="text-xs uppercase py-3 font-bold block text-lightBlue-500 hover:text-lightBlue-600"
+                className="flex items-center text-xs uppercase py-3 font-bold block text-lightBlue-500 hover:text-lightBlue-600"
               >
-                Dashboard
+                <ChartBarSquareIcon
+                  className="h-5 w-5 mr-2"
+                  aria-hidden="true"
+                />
+
+                <span>Dashboard</span>
               </Link>
             </li>
 
             <li className="items-center ml-2">
               <Link
                 href="/"
-                className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+                className="flex items-center text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
               >
-                Sair
+                <ArrowRightOnRectangleIcon
+                  className="h-5 w-5 mr-2"
+                  aria-hidden="true"
+                />
+
+                <span>Sair</span>
               </Link>
             </li>
           </ul>
