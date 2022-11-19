@@ -88,5 +88,6 @@ module.exports = {
     'react/void-dom-elements-no-children': 'off',
     'no-unused-vars': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    'no-plusplus': 'off',
   },
 };
