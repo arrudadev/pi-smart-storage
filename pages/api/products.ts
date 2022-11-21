@@ -64,14 +64,19 @@ async function handleUpdateProduct(
 ) {
   const { productId, productName, productStock } = request.body;
 
+  const data: any = {
+    name: String(productName),
+  };
+
+  if (productStock) {
+    data.stock = String(productStock);
+  }
+
   const product = await prisma.product.update({
     where: {
       id: Number(productId),
     },
-    data: {
-      name: String(productName),
-      stock: String(productStock),
-    },
+    data,
   });
 
   return response.json({
