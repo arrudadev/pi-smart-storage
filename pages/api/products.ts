@@ -36,7 +36,7 @@ async function handleCreateProduct(
     },
   });
 
-  return response.status(201).json({
+  return response.json({
     data: product,
   });
 }
@@ -53,7 +53,28 @@ async function handleDeleteProduct(
     },
   });
 
-  return response.status(201).json({
+  return response.json({
+    data: product,
+  });
+}
+
+async function handleUpdateProduct(
+  request: NextApiRequest,
+  response: NextApiResponse,
+) {
+  const { productId, productName, productStock } = request.body;
+
+  const product = await prisma.product.update({
+    where: {
+      id: Number(productId),
+    },
+    data: {
+      name: String(productName),
+      stock: String(productStock),
+    },
+  });
+
+  return response.json({
     data: product,
   });
 }
@@ -74,6 +95,10 @@ export default async function handler(
 
   if (method === 'DELETE') {
     return await handleDeleteProduct(request, response);
+  }
+
+  if (method === 'PUT') {
+    return await handleUpdateProduct(request, response);
   }
 
   return response.status(404).json({ message: 'Route no found.' });
