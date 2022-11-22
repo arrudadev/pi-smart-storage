@@ -3,6 +3,7 @@ import { DashboardFooter } from '../../components/Footers/DashboardFooter';
 import { DashboardHeader } from '../../components/Headers/DashboardHeader';
 import { ProductModal } from '../../components/Modals/ProductModal';
 import { Sidebar } from '../../components/Navbars/Sidebar';
+import { Spinner } from '../../components/Spinner/spinner';
 import { ProductTable } from '../../components/Tables/ProductTable';
 
 export default function Dashboard() {
@@ -27,6 +28,8 @@ export default function Dashboard() {
       </main>
 
       <ProductModal />
+
+      <Spinner />
     </>
   );
 }

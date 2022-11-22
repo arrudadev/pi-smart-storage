@@ -2,6 +2,7 @@ import { createContext, ReactNode, useState } from 'react';
 
 import { Product, Movements } from '@prisma/client';
 
+import { useSpinner } from '../hooks/useSpinner';
 import { api } from '../services/axios';
 
 type ProductContextData = {
@@ -28,6 +29,8 @@ export const ProductContext = createContext({} as ProductContextData);
 export const ProductContextProvider = ({
   children,
 }: ProductContextProviderProps) => {
+  const { setIsSpinnerVisible } = useSpinner();
+
   const [currentProductId, setCurrentProductId] = useState<number>(0);
   const [currentProductName, setCurrentProductName] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
@@ -36,6 +39,8 @@ export const ProductContextProvider = ({
 
   async function fetchProducts() {
     try {
+      setIsSpinnerVisible(true);
+
       const response = await api.get('/products');
 
       const { data } = response.data;
@@ -43,11 +48,15 @@ export const ProductContextProvider = ({
       setProducts(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSpinnerVisible(false);
     }
   }
 
   async function createProduct(productName: string) {
     try {
+      setIsSpinnerVisible(true);
+
       const response = await api.post('/products', {
         productName,
       });
@@ -57,11 +66,15 @@ export const ProductContextProvider = ({
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSpinnerVisible(false);
     }
   }
 
   async function updateProduct(productId: number, productName: string) {
     try {
+      setIsSpinnerVisible(true);
+
       const response = await api.put('/products', {
         productId,
         productName,
@@ -72,6 +85,8 @@ export const ProductContextProvider = ({
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSpinnerVisible(false);
     }
   }
 
