@@ -1,11 +1,36 @@
-import { Fragment } from 'react';
+import { ChangeEvent, Fragment } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 
 import { useModal } from '../../hooks/useModal';
+import { useProduct } from '../../hooks/useProduct';
 
 export const ProductModal = () => {
-  const [isModalOpen, setIsModalOpen] = useModal();
+  const { isModalOpen, setIsModalOpen, action } = useModal();
+
+  const {
+    createProduct,
+    updateProduct,
+    currentProductId,
+    currentProductName,
+    setCurrentProductName,
+  } = useProduct();
+
+  function handleChangeProduct(event: ChangeEvent<HTMLInputElement>) {
+    setCurrentProductName(event.target.value);
+  }
+
+  async function handleCreateProduct() {
+    await createProduct(currentProductName);
+
+    setIsModalOpen(false);
+  }
+
+  async function handleUpdateProduct() {
+    await updateProduct(currentProductId, currentProductName);
+
+    setIsModalOpen(false);
+  }
 
   return (
     <Transition.Root show={isModalOpen} as={Fragment}>
@@ -41,7 +66,9 @@ export const ProductModal = () => {
                         as="h3"
                         className="text-lg font-medium leading-6 text-gray-900"
                       >
-                        Cadastra produto
+                        {action === 'CREATE' && <span>Cadastra produto</span>}
+
+                        {action === 'UPDATE' && <span>Atualizar produto</span>}
                       </Dialog.Title>
 
                       <div className="mt-5">
@@ -54,6 +81,8 @@ export const ProductModal = () => {
 
                         <input
                           type="text"
+                          value={currentProductName}
+                          onChange={handleChangeProduct}
                           name="product-name"
                           id="product-name"
                           autoComplete="given-name"
@@ -68,9 +97,15 @@ export const ProductModal = () => {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={
+                      action === 'CREATE'
+                        ? handleCreateProduct
+                        : handleUpdateProduct
+                    }
                   >
-                    Cadastrar
+                    {action === 'CREATE' && <span>Cadastrar</span>}
+
+                    {action === 'UPDATE' && <span>Atualizar</span>}
                   </button>
                   <button
                     type="button"

@@ -1,60 +1,40 @@
+import { useEffect } from 'react';
 import ReactBarcode from 'react-barcode';
 
 import { PlusIcon, PencilIcon } from '@heroicons/react/20/solid';
 
 import { useModal } from '../../hooks/useModal';
+import { useProduct } from '../../hooks/useProduct';
 
 export const ProductTable = () => {
-  const [_, setIsModalOpen] = useModal();
+  const { setIsModalOpen, setAction } = useModal();
 
-  function generateRandomNumber() {
-    return Math.floor(100000000 + Math.random() * 900000000);
+  const {
+    fetchProducts,
+    products,
+    setCurrentProductId,
+    setCurrentProductName,
+  } = useProduct();
+
+  function handleCreateProduct() {
+    setAction('CREATE');
+    setCurrentProductId(0);
+    setCurrentProductName('');
+
+    setIsModalOpen(true);
   }
 
-  const products = [
-    {
-      id: generateRandomNumber(),
-      name: 'Product',
-      stock: '20',
-      barcode: generateRandomNumber(),
-    },
-    {
-      id: generateRandomNumber(),
-      name: 'Product 2',
-      stock: '18',
-      barcode: generateRandomNumber(),
-    },
-    {
-      id: generateRandomNumber(),
-      name: 'Product 3',
-      stock: '67',
-      barcode: generateRandomNumber(),
-    },
-    {
-      id: generateRandomNumber(),
-      name: 'Product 4',
-      stock: '90',
-      barcode: generateRandomNumber(),
-    },
-    {
-      id: generateRandomNumber(),
-      name: 'Product 5',
-      stock: '37',
-      barcode: generateRandomNumber(),
-    },
-    {
-      id: generateRandomNumber(),
-      name: 'Product 4',
-      stock: '90',
-      barcode: generateRandomNumber(),
-    },
-    {
-      id: generateRandomNumber(),
-      name: 'Product 5',
-      stock: '37',
-      barcode: generateRandomNumber(),
-    },
-  ];
+  function handleUpdateProduct(productId: number, productName: string) {
+    setAction('UPDATE');
+    setCurrentProductId(productId);
+    setCurrentProductName(productName);
+
+    setIsModalOpen(true);
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   return (
     <div className="w-full mb-12 px-4">
@@ -71,7 +51,7 @@ export const ProductTable = () => {
               <button
                 className="flex items-center bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
-                onClick={() => setIsModalOpen(true)}
+                onClick={handleCreateProduct}
               >
                 <PlusIcon className="h-4 w-4" aria-hidden="true" />
 
@@ -125,7 +105,9 @@ export const ProductTable = () => {
                     <PencilIcon
                       className="h-4 w-4"
                       aria-hidden="true"
-                      onClick={() => setIsModalOpen(true)}
+                      onClick={() =>
+                        handleUpdateProduct(product.id, product.name)
+                      }
                     />
                   </td>
                 </tr>
