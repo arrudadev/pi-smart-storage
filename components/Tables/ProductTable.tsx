@@ -14,20 +14,27 @@ export const ProductTable = () => {
     products,
     setCurrentProductId,
     setCurrentProductName,
+    setCurrentProductStock,
   } = useProduct();
 
   function handleCreateProduct() {
     setAction('CREATE');
     setCurrentProductId(0);
     setCurrentProductName('');
+    setCurrentProductStock('');
 
     setIsModalOpen(true);
   }
 
-  function handleUpdateProduct(productId: number, productName: string) {
+  function handleUpdateProduct(
+    productId: number,
+    productName: string,
+    productStock: string,
+  ) {
     setAction('UPDATE');
     setCurrentProductId(productId);
     setCurrentProductName(productName);
+    setCurrentProductStock(productStock);
 
     setIsModalOpen(true);
   }
@@ -106,7 +113,11 @@ export const ProductTable = () => {
                       className="h-4 w-4"
                       aria-hidden="true"
                       onClick={() =>
-                        handleUpdateProduct(product.id, product.name)
+                        handleUpdateProduct(
+                          product.id,
+                          product.name,
+                          product.stock,
+                        )
                       }
                     />
                   </td>

@@ -8,12 +8,18 @@ import { api } from '../services/axios';
 type ProductContextData = {
   currentProductId: number;
   currentProductName: string;
+  currentProductStock: string;
   setCurrentProductId: (productId: number) => void;
   setCurrentProductName: (productName: string) => void;
+  setCurrentProductStock: (productStock: string) => void;
   products: Product[];
   fetchProducts: () => Promise<void>;
   createProduct: (productName: string) => Promise<void>;
-  updateProduct: (productId: number, productName: string) => Promise<void>;
+  updateProduct: (
+    productId: number,
+    productName: string,
+    productStock: string,
+  ) => Promise<void>;
   deleteProduct: (productId: number) => Promise<void>;
   productsEntries: Movements[];
   productsOutputs: Movements[];
@@ -34,6 +40,7 @@ export const ProductContextProvider = ({
 
   const [currentProductId, setCurrentProductId] = useState<number>(0);
   const [currentProductName, setCurrentProductName] = useState('');
+  const [currentProductStock, setCurrentProductStock] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const [productsEntries, setProductsEntries] = useState<Movements[]>([]);
   const [productsOutputs, setProductsOutputs] = useState<Movements[]>([]);
@@ -72,13 +79,18 @@ export const ProductContextProvider = ({
     }
   }
 
-  async function updateProduct(productId: number, productName: string) {
+  async function updateProduct(
+    productId: number,
+    productName: string,
+    productStock: string,
+  ) {
     try {
       setIsSpinnerVisible(true);
 
       const response = await api.put('/products', {
         productId,
         productName,
+        productStock,
       });
 
       if (response.status === 200) {
@@ -150,6 +162,8 @@ export const ProductContextProvider = ({
         currentProductName,
         setCurrentProductId,
         setCurrentProductName,
+        currentProductStock,
+        setCurrentProductStock,
         products,
         fetchProducts,
         createProduct,

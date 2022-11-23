@@ -14,11 +14,17 @@ export const ProductModal = () => {
     deleteProduct,
     currentProductId,
     currentProductName,
+    currentProductStock,
     setCurrentProductName,
+    setCurrentProductStock,
   } = useProduct();
 
   function handleChangeProduct(event: ChangeEvent<HTMLInputElement>) {
     setCurrentProductName(event.target.value);
+  }
+
+  function handleChangeStock(event: ChangeEvent<HTMLInputElement>) {
+    setCurrentProductStock(event.target.value);
   }
 
   async function handleCreateProduct() {
@@ -28,7 +34,11 @@ export const ProductModal = () => {
   }
 
   async function handleUpdateProduct() {
-    await updateProduct(currentProductId, currentProductName);
+    await updateProduct(
+      currentProductId,
+      currentProductName,
+      currentProductStock,
+    );
 
     setIsModalOpen(false);
   }
@@ -104,10 +114,29 @@ export const ProductModal = () => {
                           onChange={handleChangeProduct}
                           name="product-name"
                           id="product-name"
-                          autoComplete="given-name"
                           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                       </div>
+
+                      {isUpdateProductAction() && (
+                        <div className="mt-5">
+                          <label
+                            htmlFor="product-name"
+                            className="block text-sm font-medium text-gray-700 mb-5"
+                          >
+                            Estoque
+                          </label>
+
+                          <input
+                            type="number"
+                            value={currentProductStock}
+                            onChange={handleChangeStock}
+                            name="product-stock"
+                            id="product-stock"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -64,9 +64,11 @@ async function handleUpdateProduct(
 ) {
   const { productId, productName, productStock } = request.body;
 
-  const data: any = {
-    name: String(productName),
-  };
+  const data: any = {};
+
+  if (productName) {
+    data.name = String(productName);
+  }
 
   if (productStock) {
     data.stock = String(productStock);
