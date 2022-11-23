@@ -125,6 +125,12 @@ export const ProductTable = () => {
               ))}
             </tbody>
           </table>
+
+          {products.length === 0 && (
+            <div className="h-48 w-full flex items-center justify-center">
+              <span>Nenhum produto encontrado</span>
+            </div>
+          )}
         </div>
       </div>
     </div>
