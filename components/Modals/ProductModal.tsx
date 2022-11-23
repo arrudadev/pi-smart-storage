@@ -11,6 +11,7 @@ export const ProductModal = () => {
   const {
     createProduct,
     updateProduct,
+    deleteProduct,
     currentProductId,
     currentProductName,
     setCurrentProductName,
@@ -30,6 +31,20 @@ export const ProductModal = () => {
     await updateProduct(currentProductId, currentProductName);
 
     setIsModalOpen(false);
+  }
+
+  async function handleDeleteProduct() {
+    await deleteProduct(currentProductId);
+
+    setIsModalOpen(false);
+  }
+
+  function isCreateProductAction() {
+    return action === 'CREATE';
+  }
+
+  function isUpdateProductAction() {
+    return action === 'UPDATE';
   }
 
   return (
@@ -66,9 +81,13 @@ export const ProductModal = () => {
                         as="h3"
                         className="text-lg font-medium leading-6 text-gray-900"
                       >
-                        {action === 'CREATE' && <span>Cadastra produto</span>}
+                        {isCreateProductAction() && (
+                          <span>Cadastra produto</span>
+                        )}
 
-                        {action === 'UPDATE' && <span>Atualizar produto</span>}
+                        {isUpdateProductAction() && (
+                          <span>Atualizar produto</span>
+                        )}
                       </Dialog.Title>
 
                       <div className="mt-5">
@@ -93,27 +112,42 @@ export const ProductModal = () => {
                   </div>
                 </div>
 
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <button
-                    type="button"
-                    className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={
-                      action === 'CREATE'
-                        ? handleCreateProduct
-                        : handleUpdateProduct
-                    }
-                  >
-                    {action === 'CREATE' && <span>Cadastrar</span>}
+                <div className="bg-gray-50 px-4 py-3 flex justify-between flex-col-reverse sm:flex-row sm:px-6">
+                  <div>
+                    {isUpdateProductAction() && (
+                      <button
+                        type="button"
+                        className="mt-3 bg-red-500 text-white inline-flex w-full justify-center rounded-md border border-gray-300 px-4 py-2 text-base font-medium shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                        onClick={handleDeleteProduct}
+                      >
+                        Deletar
+                      </button>
+                    )}
+                  </div>
 
-                    {action === 'UPDATE' && <span>Atualizar</span>}
-                  </button>
-                  <button
-                    type="button"
-                    className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={() => setIsModalOpen(false)}
-                  >
-                    Cancelar
-                  </button>
+                  <div>
+                    <button
+                      type="button"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={
+                        isCreateProductAction()
+                          ? handleCreateProduct
+                          : handleUpdateProduct
+                      }
+                    >
+                      {isCreateProductAction() && <span>Cadastrar</span>}
+
+                      {isUpdateProductAction() && <span>Atualizar</span>}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -14,6 +14,7 @@ type ProductContextData = {
   fetchProducts: () => Promise<void>;
   createProduct: (productName: string) => Promise<void>;
   updateProduct: (productId: number, productName: string) => Promise<void>;
+  deleteProduct: (productId: number) => Promise<void>;
   productsEntries: Movements[];
   productsOutputs: Movements[];
   fetchProductsEntries: (productId?: number) => Promise<void>;
@@ -90,6 +91,22 @@ export const ProductContextProvider = ({
     }
   }
 
+  async function deleteProduct(productId: number) {
+    try {
+      setIsSpinnerVisible(true);
+
+      const response = await api.delete(`/products?id=${productId}`);
+
+      if (response.status === 200) {
+        await fetchProducts();
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSpinnerVisible(false);
+    }
+  }
+
   async function fetchProductsEntries(productId?: number) {
     try {
       const queryParams = `month=11&year=2022&type=ENTRIE${
@@ -137,6 +154,7 @@ export const ProductContextProvider = ({
         fetchProducts,
         createProduct,
         updateProduct,
+        deleteProduct,
         productsEntries,
         productsOutputs,
         fetchProductsEntries,
