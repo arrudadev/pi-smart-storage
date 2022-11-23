@@ -3,108 +3,97 @@ import { useEffect } from 'react';
 import { Chart } from 'chart.js/auto';
 
 import { useCalendar } from '../../hooks/useCalendar';
+import { useProduct } from '../../hooks/useProduct';
 
 type LineChartProps = {
   chartId: string;
   title: string;
   legend: string;
+  type: string;
 };
 
-export const LineChart = ({ chartId, title, legend }: LineChartProps) => {
-  const { selectedMothDescription, selectedMonth, selectedYear } =
-    useCalendar();
+export const LineChart = ({ chartId, title, legend, type }: LineChartProps) => {
+  const { selectedMonth, selectedYear } = useCalendar();
 
-  function getDaysInMonth() {
-    return new Date(selectedYear, selectedMonth, 0).getDate();
+  const { fetchProductsEntries, fetchProductsOutputs } = useProduct();
+
+  function getChartLabels(data: any) {
+    return data.map((item: any) => item.day);
   }
 
-  function generateDayLabels() {
-    const quantityDays = getDaysInMonth();
-
-    const days = [];
-
-    for (let day = 1; day <= quantityDays; day++) {
-      days.push(`${day}`);
-    }
-
-    return days;
+  function getChartData(data: any) {
+    return data.map((item: any) => item.total);
   }
 
-  function generateRandomData() {
-    return Math.floor(Math.random() * (100 - 1) + 1);
-  }
-
-  function generateData() {
-    const quantityDays = getDaysInMonth();
-
-    const data = [];
-
-    for (let day = 1; day <= quantityDays; day++) {
-      data.push(generateRandomData());
-    }
-
-    return data;
+  async function fetchChartData() {
+    return type === 'ENTRIE'
+      ? await fetchProductsEntries()
+      : await fetchProductsOutputs();
   }
 
   useEffect(() => {
-    const config = {
-      type: 'line',
-      data: {
-        labels: generateDayLabels(),
-        datasets: [
-          {
-            label: legend,
-            backgroundColor: '#4c51bf',
-            borderColor: '#4c51bf',
-            data: generateData(),
-            fill: false,
-          },
-        ],
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        plugins: {
-          legend: {
-            display: false,
-          },
-          tooltip: {
-            callbacks: {
-              title(context: any) {
-                const { label } = context[0];
+    fetchChartData().then((response: any) => {
+      const { data } = response.data;
 
-                return `Dia ${label}`;
+      const config = {
+        type: 'line',
+        data: {
+          labels: getChartLabels(data),
+          datasets: [
+            {
+              label: legend,
+              backgroundColor: '#4c51bf',
+              borderColor: '#4c51bf',
+              data: getChartData(data),
+              fill: false,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              callbacks: {
+                title(context: any) {
+                  const { label } = context[0];
+
+                  return `Dia ${label}`;
+                },
+              },
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'rgba(255,255,255,1)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'rgba(255,255,255,1)',
               },
             },
           },
         },
-        scales: {
-          x: {
-            ticks: {
-              color: 'rgba(255,255,255,1)',
-            },
-          },
-          y: {
-            ticks: {
-              color: 'rgba(255,255,255,1)',
-            },
-          },
-        },
-      },
-    };
+      };
 
-    const chartStatus = Chart.getChart(chartId); // <canvas> id
-    if (chartStatus !== undefined) {
-      chartStatus.destroy();
-    }
+      const chartStatus = Chart.getChart(chartId); // <canvas> id
+      if (chartStatus !== undefined) {
+        chartStatus.destroy();
+      }
 
-    // eslint-disable-next-line
-    //@ts-ignore
-    const ctx = document.getElementById(chartId)?.getContext('2d');
+      // eslint-disable-next-line
+      //@ts-ignore
+      const ctx = document.getElementById(chartId)?.getContext('2d');
 
-    // eslint-disable-next-line
-    //@ts-ignore
-    window.myLine = new Chart(ctx, config);
+      // eslint-disable-next-line
+      //@ts-ignore
+      window.myLine = new Chart(ctx, config);
+    });
   }, [selectedMonth, selectedYear]);
 
   return (
@@ -113,7 +102,7 @@ export const LineChart = ({ chartId, title, legend }: LineChartProps) => {
         <div className="flex flex-wrap items-center">
           <div className="relative w-full max-w-full flex-grow flex-1">
             <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-              {title} - {selectedMothDescription}
+              {title}
             </h6>
 
             <span className="text-white text-sm">Produto: Todos</span>

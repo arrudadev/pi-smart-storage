@@ -23,12 +23,14 @@ export default function Dashboard() {
             chartId="product-entries"
             title="Entrada de produtos"
             legend="Entradas"
+            type="ENTRIE"
           />
 
           <LineChart
             chartId="product-outputs"
             title="Saídas dos produtos"
             legend="Saídas"
+            type="OUTPUT"
           />
 
           <DashboardFooter />

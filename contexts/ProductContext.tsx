@@ -1,9 +1,15 @@
 import { createContext, ReactNode, useState } from 'react';
 
-import { Product, Movements } from '@prisma/client';
+import { Product } from '@prisma/client';
 
+import { useCalendar } from '../hooks/useCalendar';
 import { useSpinner } from '../hooks/useSpinner';
 import { api } from '../services/axios';
+
+type DashboardData = {
+  total: string;
+  day: string;
+};
 
 type ProductContextData = {
   currentProductId: number;
@@ -21,10 +27,8 @@ type ProductContextData = {
     productStock: string,
   ) => Promise<void>;
   deleteProduct: (productId: number) => Promise<void>;
-  productsEntries: Movements[];
-  productsOutputs: Movements[];
-  fetchProductsEntries: (productId?: number) => Promise<void>;
-  fetchProductsOutputs: (productId?: number) => Promise<void>;
+  fetchProductsEntries: (productId?: number) => Promise<DashboardData[]>;
+  fetchProductsOutputs: (productId?: number) => Promise<DashboardData[]>;
 };
 
 type ProductContextProviderProps = {
@@ -38,12 +42,12 @@ export const ProductContextProvider = ({
 }: ProductContextProviderProps) => {
   const { setIsSpinnerVisible } = useSpinner();
 
+  const { selectedMonth, selectedYear } = useCalendar();
+
   const [currentProductId, setCurrentProductId] = useState<number>(0);
   const [currentProductName, setCurrentProductName] = useState('');
   const [currentProductStock, setCurrentProductStock] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
-  const [productsEntries, setProductsEntries] = useState<Movements[]>([]);
-  const [productsOutputs, setProductsOutputs] = useState<Movements[]>([]);
 
   async function fetchProducts() {
     try {
@@ -119,39 +123,43 @@ export const ProductContextProvider = ({
     }
   }
 
-  async function fetchProductsEntries(productId?: number) {
+  async function fetchProductsEntries(
+    productId?: number,
+  ): Promise<DashboardData[]> {
     try {
-      const queryParams = `month=11&year=2022&type=ENTRIE${
+      setIsSpinnerVisible(true);
+
+      const queryParams = `month=${selectedMonth}&year=${selectedYear}&type=ENTRIE${
         productId ? `&id=${productId}` : ''
       }`;
 
-      const response = await api.get(`/dashboard?${queryParams}`);
-
-      const { data } = response.data;
-
-      setProductsEntries(data);
-
-      console.log(data);
+      return await api.get(`/dashboard?${queryParams}`);
     } catch (error) {
       console.log(error);
+
+      return [];
+    } finally {
+      setIsSpinnerVisible(false);
     }
   }
 
-  async function fetchProductsOutputs(productId?: number) {
+  async function fetchProductsOutputs(
+    productId?: number,
+  ): Promise<DashboardData[]> {
     try {
-      const queryParams = `month=11&year=2022&type=OUTPUT${
+      setIsSpinnerVisible(true);
+
+      const queryParams = `month=${selectedMonth}&year=${selectedYear}&type=OUTPUT${
         productId ? `&id=${productId}` : ''
       }`;
 
-      const response = await api.get(`/dashboard?${queryParams}`);
-
-      const { data } = response.data;
-
-      setProductsOutputs(data);
-
-      console.log(data);
+      return await api.get(`/dashboard?${queryParams}`);
     } catch (error) {
       console.log(error);
+
+      return [];
+    } finally {
+      setIsSpinnerVisible(false);
     }
   }
 
@@ -169,8 +177,6 @@ export const ProductContextProvider = ({
         createProduct,
         updateProduct,
         deleteProduct,
-        productsEntries,
-        productsOutputs,
         fetchProductsEntries,
         fetchProductsOutputs,
       }}
