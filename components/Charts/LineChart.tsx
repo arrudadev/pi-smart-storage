@@ -2,18 +2,20 @@ import { useEffect } from 'react';
 
 import { Chart } from 'chart.js/auto';
 
+import { useCalendar } from '../../hooks/useCalendar';
+
 type LineChartProps = {
   chartId: string;
   title: string;
+  legend: string;
 };
 
-export const LineChart = ({ chartId, title }: LineChartProps) => {
-  function getDaysInMonth() {
-    const date = new Date();
-    const currentYear = date.getFullYear();
-    const currentMonth = date.getMonth() + 1; // 👈️ months are 0-based
+export const LineChart = ({ chartId, title, legend }: LineChartProps) => {
+  const { selectedMothDescription, selectedMonth, selectedYear } =
+    useCalendar();
 
-    return new Date(currentYear, currentMonth, 0).getDate();
+  function getDaysInMonth() {
+    return new Date(selectedYear, selectedMonth, 0).getDate();
   }
 
   function generateDayLabels() {
@@ -51,7 +53,7 @@ export const LineChart = ({ chartId, title }: LineChartProps) => {
         labels: generateDayLabels(),
         datasets: [
           {
-            label: new Date().toLocaleString('default', { month: 'long' }),
+            label: legend,
             backgroundColor: '#4c51bf',
             borderColor: '#4c51bf',
             data: generateData(),
@@ -64,9 +66,15 @@ export const LineChart = ({ chartId, title }: LineChartProps) => {
         responsive: true,
         plugins: {
           legend: {
-            display: true,
-            labels: {
-              color: 'white',
+            display: false,
+          },
+          tooltip: {
+            callbacks: {
+              title(context: any) {
+                const { label } = context[0];
+
+                return `Dia ${label}`;
+              },
             },
           },
         },
@@ -97,7 +105,7 @@ export const LineChart = ({ chartId, title }: LineChartProps) => {
     // eslint-disable-next-line
     //@ts-ignore
     window.myLine = new Chart(ctx, config);
-  }, []);
+  }, [selectedMonth, selectedYear]);
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">
@@ -105,8 +113,10 @@ export const LineChart = ({ chartId, title }: LineChartProps) => {
         <div className="flex flex-wrap items-center">
           <div className="relative w-full max-w-full flex-grow flex-1">
             <h6 className="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
-              {title}
+              {title} - {selectedMothDescription}
             </h6>
+
+            <span className="text-white text-sm">Produto: Todos</span>
           </div>
         </div>
       </div>

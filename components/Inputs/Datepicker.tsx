@@ -3,8 +3,14 @@ import ReactDatepicker from 'react-datepicker';
 
 import ptBR from 'date-fns/locale/pt-BR';
 
+import { useCalendar } from '../../hooks/useCalendar';
+
 export const Datepicker = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const { handleChangeMonth, selectedYear, selectedMonth } = useCalendar();
+
+  const [selectedDate, setSelectedDate] = useState(
+    new Date(selectedYear, selectedMonth - 1),
+  );
 
   const CustomButton = forwardRef(({ value, onClick }: any, ref: any) => (
     <button
@@ -22,6 +28,8 @@ export const Datepicker = () => {
 
   function handleChangeDate(date: Date) {
     setSelectedDate(date);
+
+    handleChangeMonth(date);
   }
 
   return (

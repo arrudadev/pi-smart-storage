@@ -19,9 +19,17 @@ export default function Dashboard() {
             <ProductTable />
           </div>
 
-          <LineChart chartId="product-entries" title="Entrada de produtos" />
+          <LineChart
+            chartId="product-entries"
+            title="Entrada de produtos"
+            legend="Entradas"
+          />
 
-          <LineChart chartId="product-outputs" title="Saídas dos produtos" />
+          <LineChart
+            chartId="product-outputs"
+            title="Saídas dos produtos"
+            legend="Saídas"
+          />
 
           <DashboardFooter />
         </section>
