@@ -13,6 +13,8 @@ model Product {
   stock     String  @db.VarChar(255)
   barcode   String  @db.VarChar(255)
   movements Movements[]
+
+  @@unique([barcode], name: "barcode_unique_constraint")
 }
 
 model Movements {

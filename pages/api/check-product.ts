@@ -8,11 +8,13 @@ async function handleCheckIfProductExists(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  const productId: string | string[] = request.query.id ? request.query.id : '';
+  const productBarcode: string | string[] = request.query.barcode
+    ? request.query.barcode
+    : '';
 
   const productExist = await prisma.product.findUnique({
     where: {
-      id: Number(productId),
+      barcode: String(productBarcode),
     },
   });
 
