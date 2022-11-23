@@ -13,9 +13,13 @@ type DashboardData = {
 
 type ProductContextData = {
   currentProductId: number;
+  chartProductId: number;
+  chartProductName: string;
   currentProductName: string;
   currentProductStock: string;
   setCurrentProductId: (productId: number) => void;
+  setChartProductId: (productId: number) => void;
+  setChartProductName: (productId: string) => void;
   setCurrentProductName: (productName: string) => void;
   setCurrentProductStock: (productStock: string) => void;
   products: Product[];
@@ -27,8 +31,8 @@ type ProductContextData = {
     productStock: string,
   ) => Promise<void>;
   deleteProduct: (productId: number) => Promise<void>;
-  fetchProductsEntries: (productId?: number) => Promise<DashboardData[]>;
-  fetchProductsOutputs: (productId?: number) => Promise<DashboardData[]>;
+  fetchProductsEntries: () => Promise<DashboardData[]>;
+  fetchProductsOutputs: () => Promise<DashboardData[]>;
 };
 
 type ProductContextProviderProps = {
@@ -47,6 +51,10 @@ export const ProductContextProvider = ({
   const [currentProductId, setCurrentProductId] = useState<number>(0);
   const [currentProductName, setCurrentProductName] = useState('');
   const [currentProductStock, setCurrentProductStock] = useState('');
+
+  const [chartProductId, setChartProductId] = useState<number>(0);
+  const [chartProductName, setChartProductName] = useState('Todos');
+
   const [products, setProducts] = useState<Product[]>([]);
 
   async function fetchProducts() {
@@ -123,14 +131,12 @@ export const ProductContextProvider = ({
     }
   }
 
-  async function fetchProductsEntries(
-    productId?: number,
-  ): Promise<DashboardData[]> {
+  async function fetchProductsEntries(): Promise<DashboardData[]> {
     try {
       setIsSpinnerVisible(true);
 
       const queryParams = `month=${selectedMonth}&year=${selectedYear}&type=ENTRIE${
-        productId ? `&id=${productId}` : ''
+        chartProductId !== 0 ? `&id=${chartProductId}` : ''
       }`;
 
       return await api.get(`/dashboard?${queryParams}`);
@@ -143,14 +149,12 @@ export const ProductContextProvider = ({
     }
   }
 
-  async function fetchProductsOutputs(
-    productId?: number,
-  ): Promise<DashboardData[]> {
+  async function fetchProductsOutputs(): Promise<DashboardData[]> {
     try {
       setIsSpinnerVisible(true);
 
       const queryParams = `month=${selectedMonth}&year=${selectedYear}&type=OUTPUT${
-        productId ? `&id=${productId}` : ''
+        chartProductId !== 0 ? `&id=${chartProductId}` : ''
       }`;
 
       return await api.get(`/dashboard?${queryParams}`);
@@ -167,9 +171,13 @@ export const ProductContextProvider = ({
     <ProductContext.Provider
       value={{
         currentProductId,
+        chartProductId,
+        chartProductName,
         currentProductName,
         setCurrentProductId,
+        setChartProductId,
         setCurrentProductName,
+        setChartProductName,
         currentProductStock,
         setCurrentProductStock,
         products,

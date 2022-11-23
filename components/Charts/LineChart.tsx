@@ -15,7 +15,12 @@ type LineChartProps = {
 export const LineChart = ({ chartId, title, legend, type }: LineChartProps) => {
   const { selectedMonth, selectedYear } = useCalendar();
 
-  const { fetchProductsEntries, fetchProductsOutputs } = useProduct();
+  const {
+    fetchProductsEntries,
+    fetchProductsOutputs,
+    chartProductId,
+    chartProductName,
+  } = useProduct();
 
   function getChartLabels(data: any) {
     return data.map((item: any) => item.day);
@@ -94,7 +99,7 @@ export const LineChart = ({ chartId, title, legend, type }: LineChartProps) => {
       //@ts-ignore
       window.myLine = new Chart(ctx, config);
     });
-  }, [selectedMonth, selectedYear]);
+  }, [selectedMonth, selectedYear, chartProductId]);
 
   return (
     <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-blueGray-700">
@@ -105,7 +110,9 @@ export const LineChart = ({ chartId, title, legend, type }: LineChartProps) => {
               {title}
             </h6>
 
-            <span className="text-white text-sm">Produto: Todos</span>
+            <span className="text-white text-sm">
+              Produto: {chartProductName}
+            </span>
           </div>
         </div>
       </div>

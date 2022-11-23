@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import ReactBarcode from 'react-barcode';
 
 import { PlusIcon, PencilIcon } from '@heroicons/react/20/solid';
@@ -15,6 +15,9 @@ export const ProductTable = () => {
     setCurrentProductId,
     setCurrentProductName,
     setCurrentProductStock,
+    chartProductId,
+    setChartProductId,
+    setChartProductName,
   } = useProduct();
 
   function handleCreateProduct() {
@@ -37,6 +40,20 @@ export const ProductTable = () => {
     setCurrentProductStock(productStock);
 
     setIsModalOpen(true);
+  }
+
+  function handleSelectProduct(
+    checked: boolean,
+    productId: number,
+    productName: string,
+  ) {
+    if (checked) {
+      setChartProductId(productId);
+      setChartProductName(productName);
+    } else {
+      setChartProductId(0);
+      setChartProductName('Todos');
+    }
   }
 
   useEffect(() => {
@@ -72,6 +89,8 @@ export const ProductTable = () => {
           <table className="items-center w-full bg-transparent border-collapse">
             <thead>
               <tr>
+                <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100" />
+
                 <th className="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left bg-blueGray-50 text-blueGray-500 border-blueGray-100">
                   Nome
                 </th>
@@ -91,6 +110,21 @@ export const ProductTable = () => {
             <tbody>
               {products.map(product => (
                 <tr key={product.id}>
+                  <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                    <input
+                      type="checkbox"
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        handleSelectProduct(
+                          event.target.checked,
+                          product.id,
+                          product.name,
+                        )
+                      }
+                      checked={chartProductId === product.id}
+                      className="form-checkbox border-1 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
+                    />
+                  </td>
+
                   <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 w-1/3">
                     {product.name}
                   </td>

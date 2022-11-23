@@ -17,6 +17,7 @@ export const ProductModal = () => {
     currentProductStock,
     setCurrentProductName,
     setCurrentProductStock,
+    setChartProductName,
   } = useProduct();
 
   function handleChangeProduct(event: ChangeEvent<HTMLInputElement>) {
@@ -40,6 +41,7 @@ export const ProductModal = () => {
       currentProductStock,
     );
 
+    setChartProductName(currentProductName);
     setIsModalOpen(false);
   }
 
