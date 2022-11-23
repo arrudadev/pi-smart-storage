@@ -22,5 +22,7 @@ model Movements {
   productId Int
   type      String   @db.VarChar(255)
   date      DateTime
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+   @@unique([productId], name: "barcode_unique_constraint")
 }
