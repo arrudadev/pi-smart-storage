@@ -26,12 +26,12 @@ export default function Dashboard() {
             type="ENTRIE"
           />
 
-          <LineChart
+          {/* <LineChart
             chartId="product-outputs"
             title="Saídas dos produtos"
             legend="Saídas"
             type="OUTPUT"
-          />
+          /> */}
 
           <DashboardFooter />
         </section>
