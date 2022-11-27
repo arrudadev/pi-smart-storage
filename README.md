@@ -15,7 +15,7 @@
 </div>
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/arrudadev/pi-smart-storage/main/.github/cover.png" height="200" alt="cover" />
+  <img src="https://raw.githubusercontent.com/arrudadev/pi-smart-storage/main/.github/cover.png" alt="cover" />
 </div>
 
 
@@ -83,12 +83,22 @@ yarn install
 cp .env.example .env
 ```
 
+After copying the examples, make sure to fill the variables with new values.
+
 <p align="justify">
   2. Run the following command to start the application in a development environment:
 </p>
 
 ```
 yarn dev
+```
+
+<p align="justify">
+  3. Open the project into your browser in:
+</p>
+
+```
+http://localhost:3000
 ```
 
 <h2 id="license"> :page_facing_up: License</h2>
